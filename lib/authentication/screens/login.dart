@@ -1,4 +1,6 @@
 import 'package:firebase_test/authentication/screens/create_account.dart';
+import 'package:firebase_test/authentication/services/auth_service.dart';
+import 'package:firebase_test/home/screens/home.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -46,9 +48,23 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 30.0,
             ),
             ElevatedButton(
-              onPressed: () {
-                print(
-                    'Email: ${_emailController.text}, Password: ${_passwordController.text}');
+              onPressed: () async {
+                final message = await AuthService().login(
+                  email: _emailController.text,
+                  password: _passwordController.text,
+                );
+                if (message!.contains('Success')) {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => const Home(),
+                    ),
+                  );
+                }
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(message),
+                  ),
+                );
               },
               child: const Text('Login'),
             ),
