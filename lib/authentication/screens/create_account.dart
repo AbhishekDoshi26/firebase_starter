@@ -1,4 +1,5 @@
 import 'package:firebase_test/authentication/services/auth_service.dart';
+import 'package:firebase_test/authentication/services/database_service.dart';
 import 'package:firebase_test/home/screens/home.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,8 @@ class CreateAccount extends StatefulWidget {
 class _CreateAccountState extends State<CreateAccount> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +50,31 @@ class _CreateAccountState extends State<CreateAccount> {
             const SizedBox(
               height: 30.0,
             ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 2,
+              child: TextField(
+                controller: _nameController,
+                decoration: const InputDecoration(
+                  hintText: 'Name',
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 30.0,
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 2,
+              child: TextField(
+                keyboardType: TextInputType.number,
+                controller: _ageController,
+                decoration: const InputDecoration(
+                  hintText: 'Age',
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 30.0,
+            ),
             ElevatedButton(
               onPressed: () async {
                 final message = await AuthService().registration(
@@ -54,8 +82,22 @@ class _CreateAccountState extends State<CreateAccount> {
                   password: _passwordController.text,
                 );
                 if (message!.contains('Success')) {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => const Home()));
+                  final result = await DatabaseService().addUser(
+                    fullName: _nameController.text,
+                    age: _ageController.text,
+                    email: _emailController.text,
+                  );
+                  if (result!.contains('success')) {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => Home(
+                              email: _emailController.text,
+                            )));
+                  }
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(result),
+                    ),
+                  );
                 }
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
