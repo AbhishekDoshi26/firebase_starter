@@ -1,5 +1,6 @@
 import 'package:firebase_test/authentication/screens/create_account.dart';
 import 'package:firebase_test/authentication/services/auth_service.dart';
+import 'package:firebase_test/authentication/services/remote_config.dart';
 import 'package:firebase_test/home/screens/home.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,18 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool visibilityData = false;
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  void fetchData() async {
+    visibilityData = await RemoteConfigService().getCreateAccountData();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,15 +84,18 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 30.0,
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const CreateAccount(),
-                  ),
-                );
-              },
-              child: const Text('Create Account'),
+            Visibility(
+              visible: visibilityData,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const CreateAccount(),
+                    ),
+                  );
+                },
+                child: const Text('Create Account'),
+              ),
             ),
           ],
         ),
