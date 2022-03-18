@@ -3,14 +3,9 @@ import 'package:firebase_test/home/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CreateAccount extends StatefulWidget {
-  const CreateAccount({Key? key}) : super(key: key);
-
-  @override
-  _CreateAccountState createState() => _CreateAccountState();
-}
-
-class _CreateAccountState extends State<CreateAccount> {
+class CreateAccount extends StatelessWidget {
+  CreateAccount({Key? key}) : super(key: key);
+  
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 

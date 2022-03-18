@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:auth_service/auth.dart';
-import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
