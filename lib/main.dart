@@ -1,6 +1,10 @@
+import 'package:auth_service/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_test/authentication/bloc/authentication_bloc.dart';
 import 'package:firebase_test/authentication/screens/login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,9 +17,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Material App',
-      home: LoginScreen(),
+    return BlocProvider(
+      create: (context) => AuthenticationBloc(
+        authService: FirebaseAuthService(
+          authService: FirebaseAuth.instance,
+          signInServiceFactory: SignInServiceFactory(),
+        ),
+      ),
+      child: MaterialApp(
+        title: 'Material App',
+        home: LoginScreen(),
+      ),
     );
   }
 }

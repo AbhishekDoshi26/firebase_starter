@@ -11,10 +11,13 @@ dependencies:
   cloud_firestore: ^3.1.10
   cupertino_icons: ^1.0.2
   firebase_auth: ^3.3.7
+  auth_service:
+    path: packages/auth_service
   firebase_core: ^1.12.0
   firebase_remote_config: ^2.0.2
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.0.1
 
 dev_dependencies:
   flutter_lints: ^1.0.0
