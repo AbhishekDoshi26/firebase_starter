@@ -5,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateAccount extends StatelessWidget {
   CreateAccount({Key? key}) : super(key: key);
-  
+
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -16,7 +17,7 @@ class CreateAccount extends StatelessWidget {
         if (state is SuccessState) {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => Home(email: _emailController.text),
+              builder: (context) => Home(name: state.name),
             ),
           );
         }
@@ -37,6 +38,16 @@ class CreateAccount extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 2,
+                child: TextField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(hintText: 'Name'),
+                ),
+              ),
+              const SizedBox(
+                height: 30.0,
+              ),
               SizedBox(
                 width: MediaQuery.of(context).size.width / 2,
                 child: TextField(
@@ -64,6 +75,7 @@ class CreateAccount extends StatelessWidget {
                 onPressed: () {
                   context.read<AuthenticationBloc>().add(
                         CreateAccountEvent(
+                          name: _nameController.text,
                           email: _emailController.text,
                           password: _passwordController.text,
                         ),

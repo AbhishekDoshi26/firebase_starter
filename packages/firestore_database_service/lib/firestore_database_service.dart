@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
-  Future<String?> addUser({
+  Future<void> addUser({
     required String fullName,
-    required String age,
     required String email,
   }) async {
     try {
@@ -12,15 +11,13 @@ class DatabaseService {
       // Call the user's CollectionReference to add a new user
       await users.doc(email).set({
         'full_name': fullName,
-        'age': age,
       });
-      return 'success';
     } catch (e) {
-      return 'Error adding user';
+      rethrow;
     }
   }
 
-  Future<String?> getUser(String email) async {
+  Future<String?> getUser({required String email}) async {
     try {
       CollectionReference users =
           FirebaseFirestore.instance.collection('users');

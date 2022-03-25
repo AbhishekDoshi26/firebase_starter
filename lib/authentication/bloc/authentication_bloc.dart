@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:auth_service/auth.dart';
+import 'package:firestore_database_service/firestore_database_service.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -25,7 +26,8 @@ class AuthenticationBloc
         email: event.email,
         password: event.password,
       );
-      emit(SuccessState());
+      final name = await DatabaseService().getUser(email: event.email);
+      emit(SuccessState(name: name!));
     } catch (e) {
       emit(
         ErrorState(
@@ -44,7 +46,8 @@ class AuthenticationBloc
         email: event.email,
         password: event.password,
       );
-      emit(SuccessState());
+      await DatabaseService().addUser(fullName: event.name, email: event.email);
+      emit(SuccessState(name: event.name));
     } catch (e) {
       emit(
         ErrorState(
