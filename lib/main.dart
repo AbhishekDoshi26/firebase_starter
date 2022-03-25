@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
       create: (context) => AuthenticationBloc(
         authService: FirebaseAuthService(
           authService: FirebaseAuth.instance,
-          signInServiceFactory: SignInServiceFactory(),
         ),
       ),
       child: MaterialApp(
