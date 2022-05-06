@@ -68,6 +68,11 @@ class FirebaseAuthService implements AuthService {
     }
   }
 
+  @override
+  String getCurrentUserId() {
+    return _firebaseAuth.currentUser?.uid ?? '';
+  }
+
   AuthError _determineError(auth.FirebaseAuthException exception) {
     switch (exception.code) {
       case 'invalid-email':

@@ -26,7 +26,9 @@ class AuthenticationBloc
         email: event.email,
         password: event.password,
       );
-      emit(SuccessState());
+      final _name =
+          await RealtimeDatabase.read(userId: _authService.getCurrentUserId());
+      emit(SuccessState(name: _name));
     } catch (e) {
       emit(
         ErrorState(
@@ -45,7 +47,14 @@ class AuthenticationBloc
         email: event.email,
         password: event.password,
       );
-      emit(SuccessState());
+      RealtimeDatabase.write(
+        userId: _authService.getCurrentUserId(),
+        data: {
+          'name': event.name,
+          'email': event.email,
+        },
+      );
+      emit(SuccessState(name: event.name));
     } catch (e) {
       emit(
         ErrorState(

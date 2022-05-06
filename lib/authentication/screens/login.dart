@@ -17,7 +17,7 @@ class LoginScreen extends StatelessWidget {
         if (state is SuccessState) {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => Home(email: _emailController.text),
+              builder: (context) => Home(name: state.name),
             ),
           );
         }
