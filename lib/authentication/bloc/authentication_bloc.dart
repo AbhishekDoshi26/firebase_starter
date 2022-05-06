@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:auth_service/auth.dart';
+import 'package:realtime_database/realtime_database.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
