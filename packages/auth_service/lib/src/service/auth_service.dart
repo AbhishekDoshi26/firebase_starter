@@ -10,4 +10,6 @@ abstract class AuthService {
     required String email,
     required String password,
   });
+
+  String getCurrentUserId();
 }

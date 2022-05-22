@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key, required this.email}) : super(key: key);
-  final String email;
+  const Home({Key? key, required this.name}) : super(key: key);
+  final String name;
   @override
   State<Home> createState() => _HomeState();
 }
@@ -14,8 +14,8 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: const Text('Home'),
       ),
-      body: const Center(
-        child: Text('Welcome !'),
+      body: Center(
+        child: Text('Welcome ${widget.name}!'),
       ),
     );
   }
